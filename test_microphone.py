@@ -78,10 +78,10 @@ try:
             data = q.get()
             if rec.AcceptWaveform(data):
                 result = rec.Result()
-                recognized_text = result["text"]
-                print(recognized_text) # Stocker le résultat final
+                recognized_text = result.strip('"{}').strip()
+                print(result.strip('"{}').strip())
                 print(f"Le texte reconnu est :{recognized_text}") # Afficher la phrase complète
-                if recognized_text.strip() !="":
+                if recognized_text !='"text" : ""':
                     # Connexion open_ai
                     load_dotenv()
                     api_key = os.getenv('OPEN_AI_KEY')
