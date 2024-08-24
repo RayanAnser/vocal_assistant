@@ -7,7 +7,7 @@ import sounddevice as sd
 import os
 from dotenv import load_dotenv
 import openai
-
+from openAI import OpenAI
 from vosk import Model, KaldiRecognizer
 
 q = queue.Queue()
@@ -106,6 +106,19 @@ try:
                     # Afficher la réponse
                     print(response.choices[0].message.content)
                     recognized_text = ""
+
+                    # Text-to-speech using OpenAI API
+                    # Connexion open_ai
+                    client = OpenAI()
+
+                    response = client.audio.speech.create(
+                        model="tts-1",
+                        voice="alloy",
+                        input="Hello world! This is a streaming test.",
+                    )
+
+                    response.stream_to_file("output.mp3")
+
                  # Réinitialiser la variable pour la prochaine phrase
             else:
                 # recognized_text += rec.PartialResult() # Accumuler les résultats partiels
